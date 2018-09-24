@@ -1,0 +1,16 @@
+before_script:
+  - yarn install
+
+cache:
+  paths:
+    - $HOME/.yarn-cache
+    - node_modules/
+
+test:
+  tags:
+    - docker
+  image: node:10.9.0
+  script:
+    - yarn tslint
+    - yarn test
+    - yarn build
