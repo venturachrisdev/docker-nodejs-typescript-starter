@@ -1,3 +1,3 @@
-yarn tslint
-yarn test
-yarn build
+#!/bin/bash
+
+yarn tslint && yarn test && yarn build
