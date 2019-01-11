@@ -12,7 +12,10 @@ export default class DatabaseConnection {
       port: parseInt(process.env.DB_PORT, 10),
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
-      entities: [__dirname + '/entities/*{.ts,.js}'],
+      entities: [
+        'src/entities/*.js',
+        'src/entities/*.ts',
+      ],
       logging: synchronize ? ['error', 'query'] : [],
       dropSchema: synchronize,
     });

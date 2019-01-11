@@ -1,29 +1,42 @@
-version: "3"
+#
+# Docker NodeJS Typescript Starter
+# Example Docker Compose file
+#
+
+# For more information about the directives defined here:
+# https://docs.docker.com/compose/compose-file/
+
+# Docker compose file version
+version: "3.6"
+
 services:
+  # Web App #
   web:
-    build: .
-    command: yarn watch-ts
-    volumes:
-      - .:/usr/src/app/
+    image: web:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
+    env_file:
+      - .env
     ports:
       - "3000:3000"
-    expose:
-      - "3000"
     depends_on:
-      - postgres
-    env_file:
-      - .env
-  postgres:
-    image: postgres:9.6.8-alpine
-    ports:
-      - "5432:5432"
-    expose:
-      - "5432"
+      - db
     volumes:
-      - ./postgres-data:/var/lib/postgresql
-    env_file:
-      - .env
+      - .:/app
+    command: yarn watch-ts
+  
+  # DB
+  db:
+    image: postgres:${POSTGRES_IMAGE_VERSION}
     environment:
       POSTGRES_DB: "${DB_NAME}"
       POSTGRES_USER: "${DB_USER}"
       POSTGRES_PASSWORD: "${DB_PASSWORD}"
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql
