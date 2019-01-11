@@ -3,7 +3,7 @@
 case $NODE_ENV in
   development)
     echo "Running Example API in development mode."
-    cp .env.dev .env
+    cp .env.example .env
     yarn build
     yarn migrate
     yarn seed
